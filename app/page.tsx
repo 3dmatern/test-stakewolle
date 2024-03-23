@@ -1,5 +1,9 @@
-import { Box, Container, Link, Typography } from "@mui/material";
+"use client";
+
 import NextLink from "next/link";
+
+import { DiscoverWalletProviders } from "@/components/DiscoverWalletProviders";
+import { Box, Container, Link } from "@mui/material";
 
 export default function Home() {
   return (
@@ -18,9 +22,7 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js App Router example in TypeScript
-        </Typography>
+        <DiscoverWalletProviders />
         <Link href="/" color="secondary" component={NextLink}>
           Go to the home page
         </Link>
