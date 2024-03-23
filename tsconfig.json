@@ -22,6 +22,7 @@
     }
   },
   "include": [
+    "main-types.d.ts",
     "metamask-types.d.ts",
     "next-env.d.ts",
     "**/*.ts",
