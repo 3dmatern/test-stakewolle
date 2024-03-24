@@ -1,13 +1,13 @@
 import {
-  Box,
+  Button,
   Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
-  Typography,
 } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { formatAddress } from "@/utils/formatAddres";
 import { UiCard } from "../ui/UiCard";
@@ -16,7 +16,12 @@ function createData(name: string, content: React.ReactNode) {
   return { name, content };
 }
 
-export const WalletInfo = ({ userAccount, selectedWallet }: WalletProvider) => {
+export const WalletInfo = ({
+  chain,
+  balance,
+  userAccount,
+  selectedWallet,
+}: WalletProvider) => {
   const rows = [
     createData(
       "Icon:",
@@ -27,6 +32,8 @@ export const WalletInfo = ({ userAccount, selectedWallet }: WalletProvider) => {
     ),
     createData("Name:", selectedWallet?.info.name),
     createData("UUID:", userAccount),
+    createData("chainId:", chain),
+    createData("balance:", balance),
   ];
 
   return (
@@ -52,6 +59,11 @@ export const WalletInfo = ({ userAccount, selectedWallet }: WalletProvider) => {
             </Table>
           </TableContainer>
         )
+      }
+      actions={
+        <Button variant="contained" color="primary" startIcon={<LogoutIcon />}>
+          Logout
+        </Button>
       }
     />
   );

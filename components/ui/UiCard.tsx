@@ -15,7 +15,16 @@ export const UiCard = ({
     <Card sx={{ borderRadius: "20px", ...sx }}>
       <CardHeader title={title} sx={{ textAlign: "center" }} />
       <CardContent>{content}</CardContent>
-      <CardActions>{actions}</CardActions>
+      <CardActions
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {actions}
+      </CardActions>
     </Card>
   );
 };

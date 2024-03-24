@@ -8,7 +8,7 @@ import { WalletInfo } from "@/components/wallet";
 
 export default function WalletPage() {
   const router = useRouter();
-  const { selectedWallet, userAccount } = useSyncProviders();
+  const { chain, balance, selectedWallet, userAccount } = useSyncProviders();
 
   useEffect(() => {
     if (!userAccount) {
@@ -17,6 +17,11 @@ export default function WalletPage() {
   }, [router, userAccount]);
 
   return (
-    <WalletInfo userAccount={userAccount} selectedWallet={selectedWallet} />
+    <WalletInfo
+      chain={chain}
+      balance={balance}
+      userAccount={userAccount}
+      selectedWallet={selectedWallet}
+    />
   );
 }
