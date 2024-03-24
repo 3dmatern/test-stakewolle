@@ -7,14 +7,23 @@ export const UiCard = ({
   actions,
 }: {
   sx?: object;
-  title: string;
+  title?: string;
   content: React.ReactNode;
   actions?: React.ReactNode;
 }) => {
   return (
     <Card sx={{ borderRadius: "20px", ...sx }}>
       <CardHeader title={title} sx={{ textAlign: "center" }} />
-      <CardContent>{content}</CardContent>
+      <CardContent
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {content}
+      </CardContent>
       <CardActions
         sx={{
           display: "flex",

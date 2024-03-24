@@ -2,19 +2,29 @@ type Children = {
   children: React.ReactNode;
 };
 
-interface WalletProviders {
-  providers: EIP6963ProviderDetail[];
-  provider: EIP1193Provider;
-  chain: string;
-  balance: string;
-  selectedWallet: EIP6963ProviderDetail | undefined;
-  userAccount: string;
-  onConnect: Function;
+interface Window {
+  ethereum: any;
 }
 
-type WalletProvider = {
-  chain: string;
+interface WalletState {
+  accounts: any[];
   balance: string;
-  selectedWallet: EIP6963ProviderDetail | undefined;
-  userAccount: string;
-};
+  chainId: string;
+}
+
+interface MetaMaskContextData {
+  wallet: WalletState;
+  hasProvider: boolean | null;
+  error: boolean;
+  errorMessage: string;
+  isConnecting: boolean;
+  connectMetaMask: () => void;
+  clearError: () => void;
+}
+
+interface WalletInfoProps {
+  address: string;
+  balanceETH: string;
+  chainId: string;
+  numChainId: number;
+}
