@@ -6,6 +6,8 @@ import { Container, CssBaseline } from "@mui/material";
 import theme from "@/theme";
 import { MetaMaskContextProvider } from "@/hooks/useMetaMask";
 
+export const dynamic = "force-dynamic";
+
 export const viewport: Viewport = {
   initialScale: 1,
   width: "device-width",
