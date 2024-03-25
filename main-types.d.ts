@@ -8,7 +8,8 @@ interface Window {
 
 interface WalletState {
   accounts: any[];
-  balance: string;
+  balanceETH: string;
+  balanceBNB: string;
   chainId: string;
 }
 
@@ -25,6 +26,7 @@ interface MetaMaskContextData {
 interface WalletInfoProps {
   address: string;
   balanceETH: string;
+  balanceBNB: string;
   chainId: string;
   numChainId: number;
 }

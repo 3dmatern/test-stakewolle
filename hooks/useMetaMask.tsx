@@ -9,13 +9,15 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
-
 import detectEthereumProvider from "@metamask/detect-provider";
+
 import { formatBalance } from "@/utils";
+import { getBNBBalance } from "@/actions/bscScan";
 
 const disconnectedState: WalletState = {
   accounts: [],
-  balance: "",
+  balanceETH: "",
+  balanceBNB: "",
   chainId: "",
 };
 
@@ -44,17 +46,25 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       return;
     }
 
-    const balance = formatBalance(
+    const balanceETH = formatBalance(
       await window.ethereum.request({
         method: "eth_getBalance",
         params: [accounts[0], "latest"],
       })
     );
+    const bscScan = await getBNBBalance(accounts[0]);
+    let balanceBNB = "";
+
+    if (bscScan?.error) {
+      setErrorMessage(bscScan.error);
+    } else {
+      balanceBNB = String(bscScan.result / 1e18);
+    }
     const chainId = await window.ethereum.request({
       method: "eth_chainId",
     });
 
-    setWallet({ accounts, balance, chainId });
+    setWallet({ accounts, balanceETH, balanceBNB, chainId });
   }, []);
 
   const updateWalletAndAccounts = useCallback(

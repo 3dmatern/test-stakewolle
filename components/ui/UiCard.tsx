@@ -12,7 +12,7 @@ export const UiCard = ({
   actions?: React.ReactNode;
 }) => {
   return (
-    <Card sx={{ borderRadius: "20px", ...sx }}>
+    <Card sx={{ py: "20px", borderRadius: "20px", ...sx }}>
       <CardHeader title={title} sx={{ textAlign: "center" }} />
       <CardContent
         sx={{

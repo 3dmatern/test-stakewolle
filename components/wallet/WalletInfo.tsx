@@ -19,12 +19,14 @@ function createData(name: string, content: React.ReactNode) {
 export const WalletInfo = ({
   address,
   balanceETH,
+  balanceBNB,
   chainId,
   numChainId,
 }: WalletInfoProps) => {
   const rows = [
     createData("address:", address),
-    createData("balance:", balanceETH + " ETH"),
+    createData("balance ETH:", balanceETH),
+    createData("balance BNB:", balanceBNB),
     createData("chainId:", chainId),
     createData("numChainId:", numChainId),
   ];
@@ -34,7 +36,7 @@ export const WalletInfo = ({
       title="Wallet Selected"
       content={
         <TableContainer component={Paper}>
-          <Table sx={{ maxWidth: "320px" }}>
+          <Table sx={{ minWidth: "320px" }}>
             <TableBody>
               {rows.map((row) => (
                 <TableRow
