@@ -5,9 +5,10 @@ import { formatChainAsNum } from "@/utils";
 
 import { WalletForm, WalletInfo } from "@/components/wallet";
 import { Stack } from "@mui/material";
+import { SwitchNetwork } from "@/components/SwitchNetwork";
 
 export default function WalletPage() {
-  const { wallet } = useMetaMask();
+  const { wallet, switchNetwork } = useMetaMask();
 
   return (
     wallet.accounts.length > 0 && (
@@ -19,6 +20,7 @@ export default function WalletPage() {
           chainId={wallet.chainId}
           numChainId={formatChainAsNum(wallet.chainId)}
         />
+        <SwitchNetwork chainId={wallet.chainId} switchNetwork={switchNetwork} />
         <WalletForm />
       </Stack>
     )

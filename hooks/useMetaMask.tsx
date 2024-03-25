@@ -118,6 +118,14 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     setIsConnecting(false);
   };
 
+  const switchNetwork = async (chainId: string) => {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId }],
+    });
+    window.location.reload();
+  };
+
   return (
     <MetaMaskContext.Provider
       value={{
@@ -128,6 +136,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting,
         connectMetaMask,
         clearError,
+        switchNetwork,
       }}
     >
       {children}

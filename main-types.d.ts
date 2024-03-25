@@ -21,6 +21,7 @@ interface MetaMaskContextData {
   isConnecting: boolean;
   connectMetaMask: () => void;
   clearError: () => void;
+  switchNetwork: (chainId: string) => void;
 }
 
 interface WalletInfoProps {
@@ -29,4 +30,9 @@ interface WalletInfoProps {
   balanceBNB: string;
   chainId: string;
   numChainId: number;
+}
+
+interface SwitchNetworkProps {
+  chainId: string;
+  switchNetwork: (chainId: string) => void;
 }
