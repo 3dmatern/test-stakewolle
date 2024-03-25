@@ -1,5 +1,4 @@
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -7,8 +6,6 @@ import {
   TableContainer,
   TableRow,
 } from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
-import NextLink from "next/link";
 
 import { UiCard } from "../ui/UiCard";
 
@@ -52,17 +49,6 @@ export const WalletInfo = ({
             </TableBody>
           </Table>
         </TableContainer>
-      }
-      actions={
-        <Button
-          href="/"
-          LinkComponent={NextLink}
-          variant="contained"
-          color="primary"
-          startIcon={<LogoutIcon />}
-        >
-          Back to Home page
-        </Button>
       }
     />
   );

@@ -10,7 +10,7 @@ export const SwitchNetwork = ({
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "start",
         gap: "5px",
         padding: "20px 30px",
         backgroundColor: "#fff",
@@ -30,12 +30,22 @@ export const SwitchNetwork = ({
       <FormControlLabel
         control={
           <Switch
-            value="0xe704"
-            checked={chainId === "0xe704"}
+            value="0xaa36a7"
+            checked={chainId === "0xaa36a7"}
             onChange={({ target }) => switchNetwork(target.value)}
           />
         }
-        label="Testnet Linea Goerli"
+        label="Testnet Linea Sepolia"
+      />
+      <FormControlLabel
+        control={
+          <Switch
+            value="0x539"
+            checked={chainId === "0x539"}
+            onChange={({ target }) => switchNetwork(target.value)}
+          />
+        }
+        label="Testnet Localhost Hardhat"
       />
     </FormGroup>
   );

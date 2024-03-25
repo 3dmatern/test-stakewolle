@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import detectEthereumProvider from "@metamask/detect-provider";
+import { ethers } from "ethers";
 
 import { formatBalance } from "@/utils";
 import { getBNBBalance } from "@/actions/bscScan";
@@ -31,35 +32,37 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [wallet, setWallet] = useState(disconnectedState);
+  const [toAccount, setToAccount] = useState("");
 
   const clearError = () => setErrorMessage("");
 
-  // useCallback ensures that you don't uselessly recreate the _updateWallet function on every render
+  const getBalance = async (account: string) => {
+    return await window.ethereum.request({
+      method: "eth_getBalance",
+      params: [account, "latest"],
+    });
+  };
+
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     const accounts =
       providedAccounts ||
       (await window.ethereum.request({ method: "eth_accounts" }));
 
     if (accounts.length === 0) {
-      // If there are no accounts, then the user is disconnected
       setWallet(disconnectedState);
       return;
     }
 
-    const balanceETH = formatBalance(
-      await window.ethereum.request({
-        method: "eth_getBalance",
-        params: [accounts[0], "latest"],
-      })
-    );
+    const balanceETH = formatBalance(await getBalance(accounts[0]));
     const bscScan = await getBNBBalance(accounts[0]);
     let balanceBNB = "";
 
     if (bscScan?.error) {
       setErrorMessage(bscScan.error);
     } else {
-      balanceBNB = String(bscScan.result / 1e18);
+      balanceBNB = bscScan.result;
     }
+
     const chainId = await window.ethereum.request({
       method: "eth_chainId",
     });
@@ -76,12 +79,6 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     [_updateWallet]
   );
 
-  /**
-   * This logic checks if MetaMask is installed. If it is, some event handlers are set up
-   * to update the wallet state when MetaMask changes. The function returned by useEffect
-   * is used as a "cleanup": it removes the event handlers whenever the MetaMaskProvider
-   * is unmounted.
-   */
   useEffect(() => {
     const getProvider = async () => {
       const provider = await detectEthereumProvider({ silent: true });
@@ -126,6 +123,30 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     router.refresh();
   };
 
+  const handleChangeAccount = (value: string) => {
+    setToAccount((prev) => value);
+  };
+
+  const sendTransaction = async () => {
+    if (toAccount.trim() === "") return;
+
+    await window.ethereum
+      .request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: wallet.accounts[0],
+            to: toAccount,
+            value: ethers.parseEther("0.01").toString(16),
+          },
+        ],
+      })
+      .then((txHash: any) => {
+        setToAccount("");
+      })
+      .catch((error: any) => console.error(error));
+  };
+
   return (
     <MetaMaskContext.Provider
       value={{
@@ -134,9 +155,12 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         error: !!errorMessage,
         errorMessage,
         isConnecting,
+        toAccount,
         connectMetaMask,
         clearError,
         switchNetwork,
+        onChangeAccount: handleChangeAccount,
+        sendTransaction,
       }}
     >
       {children}

@@ -19,9 +19,12 @@ interface MetaMaskContextData {
   error: boolean;
   errorMessage: string;
   isConnecting: boolean;
+  toAccount: string;
   connectMetaMask: () => void;
   clearError: () => void;
   switchNetwork: (chainId: string) => void;
+  onChangeAccount: (value: string) => void;
+  sendTransaction: () => void;
 }
 
 interface WalletInfoProps {
@@ -35,4 +38,10 @@ interface WalletInfoProps {
 interface SwitchNetworkProps {
   chainId: string;
   switchNetwork: (chainId: string) => void;
+}
+
+interface WalletFormProps {
+  toAccount: string;
+  onChangeAccount: (value: string) => void;
+  sendTransaction: () => void;
 }
