@@ -123,7 +123,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       method: "wallet_switchEthereumChain",
       params: [{ chainId }],
     });
-    window.location.reload();
+    router.refresh();
   };
 
   return (
